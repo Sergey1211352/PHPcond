@@ -1,4 +1,41 @@
-<!DOCTYPE html>
+<?php
+  // Инициализация массива для меню
+  $leftMenu = [
+      ['link' => 'Домой', 'href' => 'index.php'],
+      ['link' => 'О нас', 'href' => 'about.php'],
+      ['link' => 'Контакты', 'href' => 'contact.php'],
+      ['link' => 'Таблица умножения', 'href' => 'table.php'],
+      ['link' => 'Калькулятор', 'href' => 'calc.php']
+  ];
+
+  $day = date('d');
+  
+  $months = [
+      '01' => 'января', '02' => 'февраля', '03' => 'марта', 
+      '04' => 'апреля', '05' => 'мая', '06' => 'июня', 
+      '07' => 'июля', '08' => 'августа', '09' => 'сентября', 
+      '10' => 'октября', '11' => 'ноября', '12' => 'декабря'
+  ];
+  $mon_num = date('m');
+  $mon = $months[$mon_num] ?? '';
+  
+  $year = date('Y');
+
+  $hour = (int) date('H');
+  $welcome = ''; 
+
+  if ($hour >= 0 && $hour < 6) {
+      $welcome = 'Доброй ночи';
+  } elseif ($hour >= 6 && $hour < 12) {
+      $welcome = 'Доброе утро';
+  } elseif ($hour >= 12 && $hour < 18) {
+      $welcome = 'Добрый день';
+  } elseif ($hour >= 18 && $hour <= 23) {
+      $welcome = 'Добрый вечер';
+  } else {
+      $welcome = 'Доброй ночи';
+  }
+?><!DOCTYPE html>
 <html>
 
 <head>
@@ -18,11 +55,11 @@
 
   <div id="content">
     <!-- Заголовок -->
-    <h1>Добро пожаловать на наш сайт!</h1>
+    <h1><?= $welcome ?>, Гость!</h1>
     <!-- Заголовок -->
     <!-- Область основного контента -->
     <blockquote>
-      <?php echo strftime('Сегодня %d-%m-%Y'); ?>
+      <?php echo 'Сегодня ', $day, ' число, ', $mon, ' месяц, ', $year, ' год.'; ?>
     </blockquote>
     <h3>Зачем мы ходим в школу?</h3>
     <p>
@@ -44,28 +81,25 @@
     </p>
     <!-- Область основного контента -->
   </div>
+  
   <div id="nav">
     <!-- Навигация -->
     <h2>Навигация по сайту</h2>
     <!-- Меню -->
     <ul>
-      <li><a href='index.php'>Домой</a>
-      </li>
-      <li><a href='about.php'>О нас</a>
-      </li>
-      <li><a href='contact.php'>Контакты</a>
-      </li>
-      <li><a href='table.php'>Таблица умножения</a>
-      </li>
-      <li><a href='calc.php'>Калькулятор</a>
-      </li>
+      <?php
+      foreach ($leftMenu as $item) {
+          echo "<li><a href='{$item['href']}'>{$item['link']}</a></li>";
+      }
+      ?>
     </ul>
     <!-- Меню -->
     <!-- Навигация -->
   </div>
+  
   <div id="footer">
     <!-- Нижняя часть страницы -->
-    &copy; Супер Мега Веб-мастер, 2000 &ndash; 2021
+    &copy; Супер Мега Веб-мастер, 2000 &ndash; <?= $year; ?>
     <!-- Нижняя часть страницы -->
   </div>
 </body>
